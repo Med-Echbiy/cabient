@@ -14,9 +14,9 @@ export const LoginForm = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [formValues, setFormValues] = useState({
-    username: "",
-    password: "",
-    role: "",
+    username: "admin",
+    password: "admin",
+    role: "admin",
   });
   const [error, setError] = useState("");
 
