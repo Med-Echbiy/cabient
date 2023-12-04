@@ -1,6 +1,6 @@
 import { createClient } from "next-sanity";
 
-import { apiVersion, dataset, projectId, useCdn } from "../env";
+import { apiVersion, dataset, projectId, token, useCdn } from "../env";
 import { Appointments, Client, doctor, service } from "@/Types/types";
 import { redirect } from "next/navigation";
 
@@ -8,8 +8,7 @@ export const client = createClient({
   apiVersion,
   dataset,
   projectId,
-  token:
-    "sk9ldA1LywjY3G5SAFpQGExq7xBQrlAW2U1Jlhi0e0X0Z6C30qBbnb0O4M7yxc3P2daUoSD9ViQS8FBWagq6f1Qf9DRCfR5dOa1rRt1q3rqB8vw8KclXjvihgHiL07nVZK30CJWZmwF6ppFJI6Yv6p5D1ElhX9kOuuEhBJXfPygFSgmqTFxx",
+  token: token,
   useCdn,
 });
 

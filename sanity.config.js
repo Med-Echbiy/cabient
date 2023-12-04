@@ -12,7 +12,7 @@ import { schema } from "./sanity/schema";
 
 export default defineConfig({
   basePath: "/studio",
-  projectId: "j3jv1yhq",
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
   dataset: "production",
   schema,
   plugins: [
