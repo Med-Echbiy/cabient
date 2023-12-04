@@ -184,6 +184,18 @@ function AddAppointment(props: props) {
       setComponent("detail");
       toast.dismiss();
       toast.success("Terminé");
+      // reset
+      setClient((pre) => ({
+        _id: `client_${nanoid(20)}`,
+        fullName: "",
+        phone: 600000000,
+        adress: "",
+        city: "",
+        email: "",
+        age: null,
+        gender: null,
+        dateOfBirth: new Date(2000, 0, 1),
+      }));
     } catch (error) {
       toast.dismiss();
       toast.error("Quelque chose s'est mal passé");

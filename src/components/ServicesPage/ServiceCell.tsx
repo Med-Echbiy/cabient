@@ -164,7 +164,7 @@ function ServiceCell(props: props) {
       <th>{props.index + 1}</th>
       <td>
         <img
-          className="max-w-[50px] rounded aspect-square object-cover"
+          className="max-w-[30px] rounded aspect-square object-cover"
           src={`${urlForImage(props.service.image)}`}
           alt={props.service.service_name}
         />
