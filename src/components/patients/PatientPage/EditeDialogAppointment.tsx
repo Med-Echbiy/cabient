@@ -54,6 +54,7 @@ function EditeDialogAppointment(props: props) {
     color: event.color || "#06b6d4",
     assetsBlob: [],
     paid: event.paid || false,
+    amount: event.amount,
   });
 
   const handelUpdateDetail = async () => {
@@ -72,7 +73,15 @@ function EditeDialogAppointment(props: props) {
         start: new Date(e.start),
         end: new Date(e.end),
       })) as unknown as events[];
-      const validate = await submitValidation(state, events, "edite");
+      const clientName = state.title as string;
+      const client_id = getClients().find(
+        (e) => e.fullName.toLocaleLowerCase() === clientName.toLocaleLowerCase()
+      );
+      const validate = await submitValidation(
+        { ...state, client: client_id?._id as string },
+        events,
+        "edite"
+      );
       if (!validate.approved) {
         setError(validate.msg);
         throw Error(validate.msg);
@@ -80,7 +89,7 @@ function EditeDialogAppointment(props: props) {
       toast.loading("Chargement en cours...");
       const appointment = await UpdateAppointment(
         props.appointments._id,
-        state,
+        { ...state, client: client_id?._id as string },
         getClients()
       );
       if (!!appointment) {
@@ -122,7 +131,11 @@ function EditeDialogAppointment(props: props) {
         };
       });
     } else if (name === "title") {
-      const client_id = getClients().find((e) => e.fullName === value);
+      const clientName = value as string;
+
+      const client_id = getClients().find(
+        (e) => e.fullName.toLocaleLowerCase() === clientName.toLocaleLowerCase()
+      );
       console.log({ value, client_id });
       setState((pre) => {
         return {

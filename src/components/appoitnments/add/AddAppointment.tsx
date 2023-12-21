@@ -125,7 +125,10 @@ function AddAppointment(props: props) {
         };
       });
     } else if (name === "title") {
-      const client_id = getClients().find((e) => e.fullName === value);
+      const clientName = value as string;
+      const client_id = getClients().find(
+        (e) => e.fullName.toLocaleLowerCase() === clientName.toLocaleLowerCase()
+      );
       console.log({ value, client_id });
       setState((pre) => {
         return {

@@ -53,9 +53,16 @@ function EditeAppointment(props: props) {
     toggleOverlayStatu();
     try {
       const id = nanoid(30);
-      handleChangeDetail(state.client, "client");
+      handleChangeDetail(state.title, "client");
+      console.log("---------------------------\n");
+      const clientName = state.title as string;
+      console.log(state.title);
+      const client_id = getClients().find(
+        (e) => e.fullName.toLocaleLowerCase() === clientName.toLocaleLowerCase()
+      );
+      console.log("\n---------------------------\n");
       const validate = await submitValidation(
-        state,
+        { ...state, client: client_id?._id as string },
         getAppointments(),
         "edite"
       );
@@ -66,7 +73,7 @@ function EditeAppointment(props: props) {
       toast.loading("Chargement en cours...");
       const appointment = await UpdateAppointment(
         props.sch.edited?.event_id as string,
-        state,
+        { ...state, client: client_id?._id as string },
         props.clients
       );
       if (!!appointment) {
@@ -123,7 +130,10 @@ function EditeAppointment(props: props) {
         };
       });
     } else if (name === "title") {
-      const client_id = getClients().find((e) => e.fullName === value);
+      const clientName = value as string;
+      const client_id = getClients().find(
+        (e) => e.fullName.toLocaleLowerCase() === clientName.toLocaleLowerCase()
+      );
       console.log({ value, client_id });
       setState((pre) => {
         return {

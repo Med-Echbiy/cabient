@@ -43,7 +43,7 @@ export async function createAppointment(
       _type: "reservation",
       start: new Date(state.start.value),
       end: new Date(state.end.value),
-      title: state.title, // Replace with your document type in Sanity
+      title: state.title.toLocaleLowerCase(), // Replace with your document type in Sanity
       client: {
         _ref: clientId,
         _type: "reference",
@@ -115,6 +115,7 @@ export async function createDoctor(doctor: doctor) {
       ...doctor,
       _type: "unite",
       phone: Number(doctor.phone),
+      fullName: doctor.fullName.toLocaleLowerCase(),
     });
     if (res._id) {
       return res;
@@ -131,6 +132,7 @@ export async function updateDoctor(update: doctor) {
       .set({
         ...update,
         phone: Number(update.phone),
+        fullName: update.fullName.toLocaleLowerCase(),
       })
       .commit();
     return res;
@@ -149,7 +151,7 @@ export async function updateAppointment(
     const assetRefs = (await addAsset(state)) || [];
     console.log(assetRefs);
     const clientId = clients.find((e) => e.fullName === state.title);
-    console.log("update: ", state);
+    console.log("update: ", docId, state, clients);
     const res = await Client.patch(docId)
       .set({
         client: {
@@ -167,7 +169,7 @@ export async function updateAppointment(
           _type: "reference",
         },
         assets: assetRefs,
-        title: state.title,
+        title: state.title.toLocaleLowerCase(),
         color: state.paid ? "#22c55e" : "#fbbf24",
       })
       .commit();
@@ -235,8 +237,17 @@ export async function updateClient(docId: string, client: typeClient) {
         phone: Number(`212${client.phone}`),
         dateOfBirth: new Date(client.dateOfBirth as Date),
         age: calculateAge(client.dateOfBirth as Date),
+        fullName: client.fullName.toLocaleLowerCase(),
       })
       .commit();
+    const updateClientAppointmentTitle = await Client.patch({
+      query: `*[_type == 'reservation'  && client._ref == '${docId}']`,
+    })
+      .set({
+        title: client.fullName.toLocaleLowerCase(),
+      })
+      .commit();
+    console.log(updateClientAppointmentTitle);
     return res;
   } catch (error) {
     console.log(error);

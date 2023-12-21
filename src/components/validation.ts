@@ -12,7 +12,7 @@ export async function submitValidation(
   appointments: events[],
   mode: "create" | "edite" = "create"
 ) {
-  console.log(state);
+  console.log(state, appointments);
   if (!state.client) {
     return {
       approved: false,
@@ -123,7 +123,8 @@ export async function createClientValidation(
   }
 
   const isUser = users.find(
-    (e) => e.fullName.toLowerCase() === client.fullName.toLowerCase()
+    (e) =>
+      e.fullName.toLocaleLowerCase() === client.fullName.toLocaleLowerCase()
   );
   if (mode === "create" && isUser) {
     return { isValid: false, msg: "Le client est déjà enregistré." };

@@ -17,6 +17,7 @@ import { BsTrash } from "react-icons/bs";
 import { urlForImage } from "../../../../sanity/lib/image";
 import Image from "next/image";
 import { FaUserCheck, FaUserXmark } from "react-icons/fa6";
+import { usePathname } from "next/navigation";
 
 interface props {
   event_id: string;
@@ -31,13 +32,14 @@ interface Unite extends doctor {
   serviceStatus: boolean;
 }
 function EditeAppointmentForm(props: props) {
+  const path = usePathname();
+  // console.log("amount : ", props.state.amount, "path : ", path);
   const { getClients, services, doctors, updateAppointment } = useDataStore();
   const { toggleOverlayStatu } = useOverlay();
   const [unite, setUnite] = useState<null | Unite[]>(null);
   const [assets, setAssets] = useState<assets[]>(
     (props.state.assets as unknown as assets[]) || []
   );
-
   const handleAssetsDelete = async (assetId: string) => {
     toggleOverlayStatu();
     try {
@@ -162,6 +164,7 @@ function EditeAppointmentForm(props: props) {
                   label="Choisissez un client"
                 />
               )}
+              disabled={path.startsWith("/patients/client_")}
             />
           </div>
         </div>
