@@ -53,12 +53,12 @@ export async function submitValidation(
   }
 
   // Ensure start time is not earlier than the current date and time
-  if (state.start.value < currentDate) {
-    return {
-      approved: false,
-      msg: "La date de début ne peut pas être antérieure à la date actuelle.",
-    };
-  }
+  // if (state.start.value < currentDate) {
+  //   return {
+  //     approved: false,
+  //     msg: "La date de début ne peut pas être antérieure à la date actuelle.",
+  //   };
+  // }
 
   if (state.start.value >= state.end.value) {
     return {

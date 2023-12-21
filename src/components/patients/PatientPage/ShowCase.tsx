@@ -387,7 +387,7 @@ function ShowCase(props: props) {
               >
                 supprimer
               </button>
-              {currentDate > new Date(props.appointments.end) ? (
+              {/* {currentDate > new Date(props.appointments.end) ? (
                 <button
                   disabled
                   className="btn bg-violet-600 hover:bg-violet-600 text-white capitalize rounded-full"
@@ -401,7 +401,14 @@ function ShowCase(props: props) {
                 >
                   Modifier
                 </button>
-              )}
+              )} */}
+              <button
+                className="btn bg-violet-600 hover:bg-violet-600 text-white capitalize rounded-full"
+                onClick={() => setEdite(true)}
+              >
+                Modifier
+              </button>
+
               <DialogActions>
                 <button
                   className={`flex items-center justify-center gap-3 btn rounded-full capitalize ${
