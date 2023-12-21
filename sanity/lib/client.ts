@@ -59,10 +59,10 @@ export const getAllAppointments = async () => {
 };
 
 export const getAppointments60DaysOld = async () => {
-  let fourteenDaysAgo = new Date();
-  fourteenDaysAgo.setMonth(fourteenDaysAgo.getDate() - 2);
+  let sixtyDaysAgo = new Date();
+  sixtyDaysAgo.setDate(sixtyDaysAgo.getDate() - 60);
   const appointments: Appointments[] = await client.fetch(
-    `*[_type == "reservation" && defined(doctors) && defined(client) && defined(service) && dateTime(end) > dateTime('${fourteenDaysAgo.toISOString()}') ]`,
+    `*[_type == "reservation" && defined(doctors) && defined(client) && defined(service) && dateTime(end) > dateTime('${sixtyDaysAgo.toISOString()}') ]`,
     {},
     {
       cache: "no-store",
